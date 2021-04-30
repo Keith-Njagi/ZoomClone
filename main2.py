@@ -9,8 +9,11 @@ h_name = socket.gethostname()
 local_ip_address = socket.gethostbyname(h_name)
 
 
-server = StreamingServer(local_ip_address, 9999)
-receiver = AudioReceiver(local_ip_address, 8888)
+# public_ip_address = requests.get('https://api.ipify.org').text
+
+
+server = StreamingServer(local_ip_address, 7777)
+receiver = AudioReceiver(local_ip_address, 6666)
 
 def start_listening():
     t1 = threading.Thread(target=server.start_server)
@@ -19,17 +22,17 @@ def start_listening():
     t2.start()
 
 def start_camera_stream():
-    camera_client = CameraClient(text_target_ip.get(1.0,'end-1c'), 7777)
+    camera_client = CameraClient(text_target_ip.get(1.0,'end-1c'), 9999)
     t3 = threading.Thread(target=camera_client.start_stream)
     t3.start()
 
 def start_screen_sharing():
-    screen_client = ScreenShareClient(text_target_ip.get(1.0,'end-1c'), 7777)
+    screen_client = ScreenShareClient(text_target_ip.get(1.0,'end-1c'), 9999)
     t4 = threading.Thread(target=screen_client.start_stream)
     t4.start()
 
 def start_audio_stream():
-    audio_sender = ScreenShareClient(text_target_ip.get(1.0,'end-1c'), 6666)
+    audio_sender = ScreenShareClient(text_target_ip.get(1.0,'end-1c'), 8888)
     t5 = threading.Thread(target=audio_sender.start_stream)
     t5.start()
 
